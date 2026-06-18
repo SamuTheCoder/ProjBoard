@@ -1,0 +1,15 @@
+services:
+    db:
+        image: postgres:17-alpine
+        container_name: projboard-db
+        environment:
+            POSTGRES_USER: projboard_user
+            POSTGRES_PASSWORD: projboard_password
+            POSTGRES_DB: projboard
+        ports:
+            - "5432:5432"
+        volumes:
+            - projboard_pgdata:/var/lib/postgresql/data
+
+volumes:
+    projboard_pgdata:
