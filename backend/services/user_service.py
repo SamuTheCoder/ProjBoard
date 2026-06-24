@@ -86,10 +86,12 @@ def get_current_user_from_token(db: Session, token: str) -> User:
 
 
 def delete_user(db: Session, user: User) -> None:
-    """
-    Business rule:
-    User can delete their own account.
-    """
+    existing_user = db.execute(
+        select(User).where(User.user_id == user.user_id)
+    ).scalar_one_or_none()
 
-    # TODO: db.delete(user), db.commit()
-    pass
+    if existing_user is None:
+        raise ValueError("User does not exist")
+
+    db.delete(existing_user)
+    db.commit()

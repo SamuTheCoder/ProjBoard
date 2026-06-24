@@ -1,11 +1,9 @@
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from datetime import datetime
 from sqlalchemy import String, DateTime, func
 import uuid
 
-
-class Base(DeclarativeBase):
-    pass
+from dal.models.base import Base
 
 
 class User(Base):
@@ -22,3 +20,13 @@ class User(Base):
     )
     first_name: Mapped[str] = mapped_column(String(50), nullable=False)
     last_name: Mapped[str] = mapped_column(String(50), nullable=False)
+
+    owned_projects = relationship(
+        "Project", back_populates="owner", cascade="all, delete-orphan"
+    )
+
+    project_memberships = relationship(
+        "ProjectMember",
+        back_populates="user",
+        cascade="all, delete-orphan",
+    )
