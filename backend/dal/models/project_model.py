@@ -13,7 +13,7 @@ class Project(Base):
         UniqueConstraint("owner_id", "project_name", name="uq_project_owner_name"),
     )
 
-    project_id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    project_id: Mapped[int] = mapped_column(primary_key=True)
 
     project_name: Mapped[str] = mapped_column(String(100), nullable=False)
 

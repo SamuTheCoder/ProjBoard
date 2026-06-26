@@ -2,7 +2,6 @@ from pydantic import (
     BaseModel,
     EmailStr,
     Field,
-    field_validator,
     ConfigDict,
     AfterValidator,
 )
@@ -40,10 +39,10 @@ class UserCreate(UserBase):
 
 
 class UserUpdate(BaseModel):
-    username: str | None = Field(min_length=3, max_length=50)
-    email: EmailStr | None = Field(max_length=255)
-    first_name: str | None = Field(min_length=1, max_length=50)
-    last_name: str | None = Field(min_length=1, max_length=50)
+    username: str | None = Field(default=None, min_length=3, max_length=50)
+    email: EmailStr | None = Field(default=None, max_length=255)
+    first_name: str | None = Field(default=None, min_length=1, max_length=50)
+    last_name: str | None = Field(default=None, min_length=1, max_length=50)
     password: Password | None = None
 
 
@@ -53,10 +52,6 @@ class UserResponse(UserBase):
 
     # converts SQLAlchemy object model to Pydantic JSON/dict model
     model_config = ConfigDict(from_attributes=True)
-
-
-class UserUpdateResponse(UserBase):
-    user_id: int
 
 
 class UserLogin(BaseModel):
