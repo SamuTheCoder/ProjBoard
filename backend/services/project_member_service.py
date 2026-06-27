@@ -78,7 +78,7 @@ def get_project_members(db: Session, project_id: int, current_user_id: int):
     )
 
 
-def update_member_role(
+def transfer_project_ownership(
     db: Session, project_id: int, member_id: int, current_user_id: int
 ) -> ProjectMember:
     project = db.execute(
@@ -89,7 +89,7 @@ def update_member_role(
         raise ValueError("Project not found")
 
     if project.owner_id != current_user_id:
-        raise ValueError("Only the project owner can update member's role")
+        raise PermissionError("Only the project owner can update member's role")
 
     changing_membership = db.execute(
         select(ProjectMember).where(
@@ -101,7 +101,7 @@ def update_member_role(
         raise ValueError("Member to change doesn't exist in the project")
 
     changing_membership.role = ProjectRole.owner
-    project.owner = changing_membership.user_id
+    project.owner_id = member_id
 
     old_owner_membership = db.execute(
         select(ProjectMember).where(
@@ -115,6 +115,39 @@ def update_member_role(
     db.add(changing_membership)
     db.add(old_owner_membership)
     db.commit()
-    db.refresh()
+    db.refresh(changing_membership)
 
     return changing_membership
+
+
+def remove_user_from_project(
+    db: Session,
+    project_id: int,
+    old_member_id: int,
+    current_user_id: int,
+) -> None:
+    project = db.execute(
+        select(Project).where(Project.project_id == project_id)
+    ).scalar_one_or_none()
+
+    if project is None:
+        raise ValueError("Project not found")
+
+    if project.owner_id != current_user_id:
+        raise PermissionError("Only the project owner can remove members")
+
+    if old_member_id == project.owner_id:
+        raise ValueError("Cannot remove the project owner from the project")
+
+    old_member = db.execute(
+        select(ProjectMember).where(
+            ProjectMember.user_id == old_member_id,
+            ProjectMember.project_id == project_id,
+        )
+    ).scalar_one_or_none()
+
+    if old_member is None:
+        raise ValueError("Member to remove not found in the project")
+
+    db.delete(old_member)
+    db.commit()
