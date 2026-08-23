@@ -1,7 +1,10 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import select
+from sqlalchemy import select, update, case, delete
+from sqlalchemy.exc import SQLAlchemyError
 
 from dal.models.user_model import User
+from dal.models.task_model import Task, TaskStatus
+from dal.models.project_model import Project
 from schemas.user_schemas import UserCreate, UserLogin, UserLoginResponse
 from core.security import (
     hash_password,
@@ -93,5 +96,46 @@ def delete_user(db: Session, user_id: int) -> None:
     if existing_user is None:
         raise ValueError("User does not exist")
 
-    db.delete(existing_user)
-    db.commit()
+    try:
+        # 1. Delete projects owned by this user.
+        # Their tasks/members should cascade.
+        db.execute(delete(Project).where(Project.owner_id == user_id))
+
+        # 2. Reassign remaining tasks created by this user.
+        # These are tasks in projects owned by other users.
+        project_owner_subquery = (
+            select(Project.owner_id)
+            .where(Project.project_id == Task.project_id)
+            .scalar_subquery()
+        )
+
+        db.execute(
+            update(Task)
+            .where(Task.created_by == user_id)
+            .values(created_by=project_owner_subquery)
+        )
+
+        # 3. Clean reviewer state.
+        db.execute(
+            update(Task)
+            .where(Task.reviewer_id == user_id)
+            .values(
+                reviewer_id=None,
+                review_status=None,
+                status=case(
+                    (
+                        Task.status == TaskStatus.to_review,
+                        TaskStatus.in_progress,
+                    ),
+                    else_=Task.status,
+                ),
+            )
+        )
+
+        # 4. Delete user.
+        db.delete(existing_user)
+        db.commit()
+
+    except SQLAlchemyError:
+        db.rollback()
+        raise

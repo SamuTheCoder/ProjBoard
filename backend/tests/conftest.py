@@ -2,8 +2,9 @@ import pytest
 from alembic import command
 from alembic.config import Config
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, select
 from sqlalchemy.orm import sessionmaker
+from dal.models.project_member_model import ProjectMember
 
 from core.config import settings
 from dal.database import get_db
@@ -35,6 +36,15 @@ def override_get_db():
 
 
 app.dependency_overrides[get_db] = override_get_db
+
+
+@pytest.fixture()
+def db_session():
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -249,3 +259,79 @@ def task_workflow_setup(
         }
 
     return _task_workflow_setup
+
+
+@pytest.fixture()
+def delete_me(client):
+    def _delete_me(headers: dict):
+        response = client.delete("/users/me", headers=headers)
+        assert response.status_code == 204, (
+            response.json() if response.content else None
+        )
+        return response
+
+    return _delete_me
+
+
+@pytest.fixture()
+def move_task_to_done(client):
+    def _move_task_to_done(
+        url: str,
+        assignee_headers: dict,
+        reviewer_headers: dict,
+    ):
+        response = client.patch(
+            url,
+            json={"status": "ready"},
+            headers=assignee_headers,
+        )
+        assert response.status_code == 200, response.json()
+
+        response = client.patch(
+            url,
+            json={"status": "in_progress"},
+            headers=assignee_headers,
+        )
+        assert response.status_code == 200, response.json()
+
+        response = client.patch(
+            url,
+            json={"status": "to_review"},
+            headers=assignee_headers,
+        )
+        assert response.status_code == 200, response.json()
+
+        response = client.patch(
+            url,
+            json={"review_status": "approved"},
+            headers=reviewer_headers,
+        )
+        assert response.status_code == 200, response.json()
+
+        response = client.patch(
+            url,
+            json={"status": "done"},
+            headers=assignee_headers,
+        )
+        assert response.status_code == 200, response.json()
+        assert response.json()["status"] == "done"
+
+        return response.json()
+
+    return _move_task_to_done
+
+
+@pytest.fixture()
+def assert_no_project_memberships(db_session):
+    def _assert_no_project_memberships(project_id: int):
+        memberships = (
+            db_session.execute(
+                select(ProjectMember).where(ProjectMember.project_id == project_id)
+            )
+            .scalars()
+            .all()
+        )
+
+        assert memberships == []
+
+    return _assert_no_project_memberships

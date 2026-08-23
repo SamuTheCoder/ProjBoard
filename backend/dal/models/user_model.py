@@ -22,13 +22,15 @@ class User(Base):
     last_name: Mapped[str] = mapped_column(String(50), nullable=False)
 
     owned_projects = relationship(
-        "Project", back_populates="owner", cascade="all, delete-orphan"
+        "Project",
+        back_populates="owner",
+        passive_deletes=True,  # passive_deletes -> let the database handle deletion of owned projects
     )
 
     project_memberships = relationship(
         "ProjectMember",
         back_populates="user",
-        cascade="all, delete-orphan",
+        passive_deletes=True,
     )
 
     created_tasks = relationship(

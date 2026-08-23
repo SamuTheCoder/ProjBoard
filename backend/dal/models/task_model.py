@@ -71,7 +71,7 @@ class Task(Base):
     )
 
     created_by: Mapped[int] = mapped_column(
-        ForeignKey("users.user_id", ondelete="RESTRICT"),
+        ForeignKey("users.user_id"),
         nullable=False,
         index=True,
     )

@@ -99,6 +99,9 @@ def _validate_participants(
 
 
 def _apply_task_workflow_rules(task: Task, update_data: dict) -> None:
+    if task.status == TaskStatus.done and update_data:
+        raise ValueError("Completed tasks cannot be modified")
+
     requested_fields = set(update_data)
     requested_status = update_data.get("status")
     requested_review_status = update_data.get("review_status")
