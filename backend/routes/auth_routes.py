@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from fastapi.security import OAuth2PasswordRequestForm
 
 from dal.database import get_db
 from schemas.user_schemas import UserCreate, UserResponse, UserLogin, UserLoginResponse
@@ -21,15 +22,21 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
         )
 
 
-@router.post("/login", response_model=UserLoginResponse, status_code=status.HTTP_200_OK)
-def login(login_data: UserLogin, db: Session = Depends(get_db)):
+@router.post("/login", response_model=UserLoginResponse)
+def login(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db),
+):
     try:
+        login_data = UserLogin(
+            username=form_data.username,
+            password=form_data.password,
+        )
+
         return login_user(db, login_data)
+
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=str(e),
-            headers={
-                "WWW-Authenticate": "Bearer"
-            },  # this endpoint requires bearer token auth
         )

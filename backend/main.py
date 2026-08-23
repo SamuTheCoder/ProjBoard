@@ -1,11 +1,15 @@
 from fastapi import FastAPI
 from routes.auth_routes import router as auth_router
 from routes.user_routes import router as user_router
+from routes.project_routes import router as project_router
+from routes.task_routes import router as task_routes
 
 app = FastAPI()
 
 app.include_router(auth_router)
 app.include_router(user_router)
+app.include_router(project_router)
+app.include_router(task_routes)
 
 
 @app.get("/")

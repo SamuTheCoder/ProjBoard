@@ -30,3 +30,21 @@ class User(Base):
         back_populates="user",
         cascade="all, delete-orphan",
     )
+
+    created_tasks = relationship(
+        "Task",
+        foreign_keys="Task.created_by",
+        back_populates="creator",
+    )
+
+    assigned_tasks = relationship(
+        "Task",
+        foreign_keys="Task.assignee_id",
+        back_populates="assignee",
+    )
+
+    review_tasks = relationship(
+        "Task",
+        foreign_keys="Task.reviewer_id",
+        back_populates="reviewer",
+    )

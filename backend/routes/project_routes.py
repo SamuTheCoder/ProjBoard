@@ -4,11 +4,7 @@ from sqlalchemy.orm import Session
 from dal.database import get_db
 from core.dependencies import get_current_user
 from schemas.project_schemas import ProjectCreate, ProjectUpdate, ProjectResponse
-from schemas.project_member_schemas import (
-    ProjectMemberCreate,
-    ProjectMemberResponse,
-    ProjectMemberUpdate,
-)
+from schemas.project_member_schemas import ProjectMemberCreate, ProjectMemberResponse
 from dal.models.user_model import User
 import services.project_service as project_service
 import services.project_member_service as project_member_service
@@ -58,7 +54,7 @@ def update_project(
     current_user=Depends(get_current_user),
 ):
     try:
-        return project_service.update(
+        return project_service.update_project(
             db, project_id, project_data, current_user.user_id
         )
     except ValueError as e:
@@ -72,7 +68,7 @@ def delete_project(
     current_user=Depends(get_current_user),
 ):
     try:
-        project_service.delete(db, project_id, current_user.user_id)
+        project_service.delete_project(db, project_id, current_user.user_id)
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
 
@@ -128,13 +124,13 @@ def list_members(
 
 
 @router.patch(
-    "/{project_id}/members/{user_id}",
-    response_model=ProjectMemberUpdate,
+    "/{project_id}/members/{new_owner_id}",
+    response_model=ProjectMemberResponse,
     status_code=status.HTTP_200_OK,
 )
 def transfer_ownership(
     project_id: int,
-    user_id: int,
+    new_owner_id: int,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
@@ -142,7 +138,7 @@ def transfer_ownership(
         return project_member_service.transfer_project_ownership(
             db=db,
             project_id=project_id,
-            new_owner_id=user_id,
+            new_owner_id=new_owner_id,
             current_user_id=current_user.user_id,
         )
 

@@ -1,10 +1,12 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import select
+from sqlalchemy import select, update, case
+from sqlalchemy.exc import SQLAlchemyError
 
-from backend.schemas.project_member_schemas import ProjectMemberResponse
+from schemas.project_member_schemas import ProjectMemberResponse
 from dal.models.user_model import User
 from dal.models.project_model import Project
 from dal.models.project_member_model import ProjectRole, ProjectMember
+from dal.models.task_model import Task, TaskStatus
 from schemas.project_schemas import ProjectCreate, ProjectUpdate
 from services.user_service import get_user_by_id
 
@@ -73,13 +75,13 @@ def get_project_members(db: Session, project_id: int, current_user_id: int):
                 ProjectMember.project_id == project_id,
             )
         )
-        .scalar()
+        .scalars()
         .all()
     )
 
 
 def transfer_project_ownership(
-    db: Session, project_id: int, member_id: int, current_user_id: int
+    db: Session, project_id: int, new_owner_id: int, current_user_id: int
 ) -> ProjectMember:
     project = db.execute(
         select(Project).where(Project.project_id == project_id)
@@ -93,7 +95,8 @@ def transfer_project_ownership(
 
     changing_membership = db.execute(
         select(ProjectMember).where(
-            ProjectMember.project_id == project_id, ProjectMember.user_id == member_id
+            ProjectMember.project_id == project_id,
+            ProjectMember.user_id == new_owner_id,
         )
     ).scalar_one_or_none()
 
@@ -101,7 +104,7 @@ def transfer_project_ownership(
         raise ValueError("Member to change doesn't exist in the project")
 
     changing_membership.role = ProjectRole.owner
-    project.owner_id = member_id
+    project.owner_id = new_owner_id
 
     old_owner_membership = db.execute(
         select(ProjectMember).where(
@@ -149,5 +152,37 @@ def remove_user_from_project(
     if old_member is None:
         raise ValueError("Member to remove not found in the project")
 
+    db.execute(
+        update(Task)
+        .where(
+            Task.project_id == project_id,
+            Task.assignee_id == old_member_id,
+        )
+        .values(assignee_id=None)
+    )
+    db.execute(
+        update(Task)
+        .where(
+            Task.project_id == project_id,
+            Task.reviewer_id == old_member_id,
+        )
+        .values(
+            reviewer_id=None,
+            review_status=None,
+            status=case(
+                (
+                    Task.status == TaskStatus.to_review,
+                    TaskStatus.in_progress,
+                ),
+                else_=Task.status,
+            ),
+        )
+    )
+
     db.delete(old_member)
-    db.commit()
+
+    try:
+        db.commit()
+    except SQLAlchemyError:
+        db.rollback()
+        raise

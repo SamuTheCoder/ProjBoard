@@ -85,9 +85,9 @@ def get_current_user_from_token(db: Session, token: str) -> User:
     return user
 
 
-def delete_user(db: Session, user: User) -> None:
+def delete_user(db: Session, user_id: int) -> None:
     existing_user = db.execute(
-        select(User).where(User.user_id == user.user_id)
+        select(User).where(User.user_id == user_id)
     ).scalar_one_or_none()
 
     if existing_user is None:
