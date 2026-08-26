@@ -46,6 +46,10 @@ class Project(Base):
         cascade="all, delete-orphan",
     )
 
+    @property
+    def member_count(self) -> int:
+        return len(self.members)
+
     tasks = relationship(
         "Task",
         back_populates="project",

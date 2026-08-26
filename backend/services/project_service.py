@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 from sqlalchemy import select
 
 from dal.models.project_model import Project
@@ -73,6 +73,7 @@ def get_projects_for_user(db: Session, user_id: int) -> list[Project]:
             select(Project)
             .join(Project.members)
             .where(ProjectMember.user_id == user_id)
+            .options(selectinload(Project.members))
         )
         .scalars()
         .all()

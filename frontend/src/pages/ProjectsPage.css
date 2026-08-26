@@ -1,0 +1,52 @@
+.projects-page {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 70% 30%, #1b164c 0%, transparent 35%), #0b0925;
+
+    color: white;
+}
+
+.projects-content {
+    padding: 4rem 5%;
+}
+
+.projects-welcome {
+    margin-bottom: 3rem;
+}
+
+.projects-welcome h1 {
+    margin: 0 0 0.5rem;
+    font-size: 2rem;
+}
+
+.projects-welcome p {
+    margin: 0;
+    color: #aaa8c4;
+    font-size: 1.1rem;
+}
+
+.projects-section {
+    width: 100%;
+}
+
+.projects-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 2rem;
+}
+
+.projects-header h2 {
+    margin: 0;
+}
+
+.new-project-button {
+    width: 170px;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+}
