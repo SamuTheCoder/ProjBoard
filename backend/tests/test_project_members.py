@@ -16,7 +16,7 @@ def test_transfer_project_ownership_success(
     add_project_member(
         headers=owner_headers,
         project_id=project["project_id"],
-        user_id=new_owner["user_id"],
+        username=new_owner["username"],
     )
 
     response = client.patch(
@@ -52,8 +52,8 @@ def test_old_owner_can_no_longer_remove_members_after_transfer(
 
     project = create_project(old_owner_headers)
 
-    add_project_member(old_owner_headers, project["project_id"], new_owner["user_id"])
-    add_project_member(old_owner_headers, project["project_id"], member["user_id"])
+    add_project_member(old_owner_headers, project["project_id"], new_owner["username"])
+    add_project_member(old_owner_headers, project["project_id"], member["username"])
 
     response = client.patch(
         f"/projects/{project['project_id']}/members/{new_owner['user_id']}",

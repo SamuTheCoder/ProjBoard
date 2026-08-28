@@ -74,9 +74,9 @@ def test_changing_reviewer_resets_review_status(
 
     project = create_project(owner_headers)
 
-    add_project_member(owner_headers, project["project_id"], assignee["user_id"])
-    add_project_member(owner_headers, project["project_id"], reviewer_one["user_id"])
-    add_project_member(owner_headers, project["project_id"], reviewer_two["user_id"])
+    add_project_member(owner_headers, project["project_id"], assignee["username"])
+    add_project_member(owner_headers, project["project_id"], reviewer_one["username"])
+    add_project_member(owner_headers, project["project_id"], reviewer_two["username"])
 
     task = create_task(
         headers=owner_headers,

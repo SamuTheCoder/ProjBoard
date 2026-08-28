@@ -4,7 +4,11 @@ from sqlalchemy.orm import Session
 from dal.database import get_db
 from core.dependencies import get_current_user
 from schemas.project_schemas import ProjectCreate, ProjectUpdate, ProjectResponse
-from schemas.project_member_schemas import ProjectMemberCreate, ProjectMemberResponse
+from schemas.project_member_schemas import (
+    ProjectMemberCreate,
+    ProjectMemberResponse,
+    ProjectMemberDetailsResponse,
+)
 from dal.models.user_model import User
 import services.project_service as project_service
 import services.project_member_service as project_member_service
@@ -88,20 +92,26 @@ def add_member(
         return project_member_service.add_user_to_project(
             db=db,
             project_id=project_id,
-            user_id=member_data.user_id,
+            username=member_data.username,
             current_user_id=current_user.user_id,
         )
 
     except PermissionError as e:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=str(e),
+        )
 
     except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e),
+        )
 
 
 @router.get(
     "/{project_id}/members",
-    response_model=list[ProjectMemberResponse],
+    response_model=list[ProjectMemberDetailsResponse],
     status_code=status.HTTP_200_OK,
 )
 def list_members(
@@ -117,10 +127,16 @@ def list_members(
         )
 
     except PermissionError as e:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=str(e),
+        )
 
     except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e),
+        )
 
 
 @router.patch(

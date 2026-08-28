@@ -9,18 +9,16 @@ export function getApiErrorMessage(error: unknown): string {
         return "Unable to connect to the server.";
     }
 
-    const { status, data } = error.response;
+    const data = error.response.data;
 
-    if (status === 401) {
-        return data.detail ?? "Invalid username or password.";
+    // FastAPI HTTPException
+    if (typeof data?.detail === "string") {
+        return data.detail;
     }
 
-    if (status === 409) {
-        return data.detail ?? "This account already exists.";
-    }
-
-    if (status === 422) {
-        return "Please check the information you entered.";
+    // FastAPI/Pydantic validation errors
+    if (Array.isArray(data?.detail)) {
+        return data.detail.map((error) => error.msg).join(", ");
     }
 
     return "Something went wrong.";

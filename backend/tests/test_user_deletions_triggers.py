@@ -19,7 +19,7 @@ def test_deleting_project_owner_deletes_owned_project_tasks_and_memberships(
     add_project_member(
         headers=owner_headers,
         project_id=project["project_id"],
-        user_id=member["user_id"],
+        username=member["username"],
     )
 
     create_task(
@@ -92,7 +92,7 @@ def test_deleting_task_creator_reassigns_task_to_project_owner(
     add_project_member(
         headers=owner_headers,
         project_id=project["project_id"],
-        user_id=creator["user_id"],
+        username=creator["username"],
     )
 
     task = create_task(
@@ -176,9 +176,9 @@ def test_deleting_user_who_is_creator_and_reviewer_reassigns_and_clears_review(
 
     project = create_project(owner_headers)
 
-    add_project_member(owner_headers, project["project_id"], assignee["user_id"])
+    add_project_member(owner_headers, project["project_id"], assignee["username"])
     add_project_member(
-        owner_headers, project["project_id"], reviewer_creator["user_id"]
+        owner_headers, project["project_id"], reviewer_creator["username"]
     )
 
     task = create_task(

@@ -12,7 +12,10 @@ from services.user_service import get_user_by_id
 
 
 def add_user_to_project(
-    db: Session, project_id: int, user_id: int, current_user_id: int
+    db: Session,
+    project_id: int,
+    username: str,
+    current_user_id: int,
 ) -> ProjectMemberResponse:
     project = db.execute(
         select(Project).where(Project.project_id == project_id)
@@ -25,11 +28,13 @@ def add_user_to_project(
         raise PermissionError("Only the project owner can add members")
 
     target_user = db.execute(
-        select(User).where(User.user_id == user_id)
+        select(User).where(User.username == username)
     ).scalar_one_or_none()
 
     if target_user is None:
         raise ValueError("User not found")
+
+    user_id = target_user.user_id
 
     existing_membership = db.execute(
         select(ProjectMember).where(
@@ -51,7 +56,11 @@ def add_user_to_project(
     return new_membership
 
 
-def get_project_members(db: Session, project_id: int, current_user_id: int):
+def get_project_members(
+    db: Session,
+    project_id: int,
+    current_user_id: int,
+):
     project = db.execute(
         select(Project).where(Project.project_id == project_id)
     ).scalar_one_or_none()
@@ -69,15 +78,25 @@ def get_project_members(db: Session, project_id: int, current_user_id: int):
     if current_user_membership is None:
         raise PermissionError("Current user does not belong to this project")
 
-    return (
-        db.execute(
-            select(ProjectMember).where(
-                ProjectMember.project_id == project_id,
-            )
-        )
-        .scalars()
-        .all()
-    )
+    rows = db.execute(
+        select(ProjectMember, User)
+        .join(User, User.user_id == ProjectMember.user_id)
+        .where(ProjectMember.project_id == project_id)
+    ).all()
+
+    return [
+        {
+            "project_id": membership.project_id,
+            "user_id": membership.user_id,
+            "role": membership.role,
+            "joined_at": membership.joined_at,
+            "username": user.username,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+        }
+        for membership, user in rows
+    ]
 
 
 def transfer_project_ownership(

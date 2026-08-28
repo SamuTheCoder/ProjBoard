@@ -156,11 +156,11 @@ def add_project_member(client):
     def _add_project_member(
         headers: dict,
         project_id: int,
-        user_id: int,
+        username: str,
     ):
         response = client.post(
             f"/projects/{project_id}/members",
-            json={"user_id": user_id},
+            json={"username": username},
             headers=headers,
         )
 
@@ -221,7 +221,7 @@ def task_workflow_setup(
         add_project_member(
             headers=owner_headers,
             project_id=project["project_id"],
-            user_id=assignee["user_id"],
+            username=assignee["username"],
         )
 
         reviewer = None
@@ -236,7 +236,7 @@ def task_workflow_setup(
             add_project_member(
                 headers=owner_headers,
                 project_id=project["project_id"],
-                user_id=reviewer["user_id"],
+                username=reviewer["username"],
             )
 
         task = create_task(

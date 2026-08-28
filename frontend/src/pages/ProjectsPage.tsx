@@ -8,12 +8,15 @@ import type { UserResponse } from "../types/auth";
 import { getProjects } from "../api/project";
 import type { ProjectResponse } from "../types/project";
 import { CreateProjectModal } from "../components/CreateProjectModal";
+import { useNavigate } from "react-router-dom";
+import { ErrorToast } from "../components/ErrorToast/ErrorToast";
 
 export function ProjectsPage() {
     const [projects, setProjects] = useState<ProjectResponse[]>([]);
 
     const [user, setUser] = useState<UserResponse | null>(null);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function loadUser() {
@@ -62,7 +65,9 @@ export function ProjectsPage() {
                                 name={project.project_name}
                                 description={project.project_description}
                                 memberCount={project.member_count}
-                                onClick={() => console.log(project.project_id)}
+                                onClick={() =>
+                                    navigate(`/projects/${project.project_id}`)
+                                }
                             />
                         ))}
                     </div>

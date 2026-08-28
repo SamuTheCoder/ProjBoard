@@ -3,6 +3,11 @@ export type ProjectCreate = {
     project_description: string | null;
 };
 
+export type ProjectUpdate = {
+    project_name?: string;
+    project_description?: string | null;
+};
+
 export type ProjectResponse = {
     project_id: number;
     project_name: string;

@@ -1,0 +1,42 @@
+.stat-card {
+    flex: 1;
+    min-width: 130px;
+
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+
+    padding: 1rem;
+
+    background: #151234;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+}
+
+.stat-card-icon {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(108, 60, 255, 0.12);
+    border-radius: 8px;
+}
+
+.stat-card strong,
+.stat-card span {
+    display: block;
+}
+
+.stat-card strong {
+    color: white;
+    font-size: 1.1rem;
+}
+
+.stat-card span {
+    margin-top: 0.2rem;
+    color: #9996b5;
+    font-size: 0.8rem;
+}

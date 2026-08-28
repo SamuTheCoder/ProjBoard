@@ -6,6 +6,7 @@ import { login, register } from "../api/auth";
 import { getApiErrorMessage } from "../api/errors";
 import { useNavigate } from "react-router-dom";
 import "./AuthPage.css";
+import { ErrorToast } from "../components/ErrorToast/ErrorToast";
 
 type AuthMode = "login" | "register";
 
@@ -32,6 +33,12 @@ export function AuthPage() {
             ...formData,
             [event.target.name]: event.target.value,
         });
+    }
+
+    function changeMode(mode: AuthMode) {
+        setMode(mode);
+        setError("");
+        setSuccess("");
     }
 
     async function handleSubmit(event: React.FormEvent) {
@@ -64,7 +71,7 @@ export function AuthPage() {
                 });
 
                 setSuccess("Account created successfully. You can now log in.");
-                setMode("login");
+                changeMode("login");
             }
         } catch (error) {
             setError(getApiErrorMessage(error));
@@ -73,7 +80,10 @@ export function AuthPage() {
 
     return (
         <main className="auth-page">
-            <section className="auth-left">
+            <ErrorToast message={error} onClose={() => setError("")} />
+            <section
+                className={`auth-left ${isLogin ? "login-mode" : "register-mode"}`}
+            >
                 <Brand size="md" />
 
                 <div className="auth-content">
@@ -91,14 +101,14 @@ export function AuthPage() {
                     <div className="auth-tabs">
                         <button
                             className={isLogin ? "active" : ""}
-                            onClick={() => setMode("login")}
+                            onClick={() => changeMode("login")}
                         >
                             Log in
                         </button>
 
                         <button
                             className={!isLogin ? "active" : ""}
-                            onClick={() => setMode("register")}
+                            onClick={() => changeMode("register")}
                         >
                             Register
                         </button>
@@ -183,7 +193,6 @@ export function AuthPage() {
                             </>
                         )}
                         <p className="form-success">{success}</p>
-                        <p className="form-error">{error || "\u00A0"}</p>
                         <Button type="submit">
                             {isLogin ? "Log in" : "Register"}
                         </Button>

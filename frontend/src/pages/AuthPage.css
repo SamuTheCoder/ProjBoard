@@ -6,9 +6,12 @@
 }
 
 .auth-left {
-    width: 33%;
-    min-width: 420px;
-    padding: 3rem;
+    width: 36%;
+    height: 100vh;
+    box-sizing: border-box;
+
+    padding: 2.5rem 3.5rem;
+
     display: flex;
     flex-direction: column;
 }
@@ -16,8 +19,66 @@
 .auth-content {
     width: 100%;
     max-width: 400px;
+}
+
+/* LOGIN */
+
+.login-mode .auth-content {
     margin: auto 0;
 }
+
+/* REGISTER */
+
+.register-mode {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.register-mode .auth-content {
+    margin-top: 1.25rem;
+}
+
+.register-mode .auth-heading {
+    margin-bottom: 1rem;
+}
+
+.register-mode .auth-heading h1 {
+    margin: 0 0 0.35rem;
+}
+
+.register-mode .auth-heading p {
+    margin: 0;
+    line-height: 1.35;
+}
+
+.register-mode .auth-tabs {
+    margin-bottom: 1rem;
+}
+
+.register-mode .auth-tabs button {
+    padding: 0.7rem;
+}
+
+.register-mode .auth-form {
+    gap: 0.7rem;
+}
+
+/* Your FormField component */
+
+.register-mode .form-field {
+    gap: 0.3rem;
+}
+
+.register-mode .form-field label {
+    font-size: 0.9rem;
+}
+
+.register-mode .form-field__input {
+    height: 44px;
+    padding: 0.65rem 0.9rem;
+}
+
+/* NORMAL SHARED STYLES */
 
 .auth-heading {
     margin-bottom: 2rem;
@@ -34,14 +95,18 @@
 .auth-tabs {
     display: flex;
     margin-bottom: 2rem;
+
     border-bottom: 1px solid #ddd;
 }
 
 .auth-tabs button {
     flex: 1;
+
     padding: 1rem;
+
     border: none;
     background: none;
+
     cursor: pointer;
 }
 
@@ -53,11 +118,13 @@
 .auth-form {
     display: flex;
     flex-direction: column;
+
     gap: 1.2rem;
 }
 
 .auth-right {
     flex: 1;
+
     display: flex;
     align-items: center;
 
@@ -78,26 +145,22 @@
 }
 
 .auth-right-content h2 {
+    margin: 0 0 1.5rem;
+
     font-size: 2.5rem;
     line-height: 1.2;
-    margin: 0 0 1.5rem 0;
 }
 
 .auth-right-content p {
     font-size: 1.6rem;
     line-height: 1.6;
-    opacity: 0.7;
-}
 
-.form-error {
-    margin: 0;
-    min-height: 1.2rem;
-    font-size: 0.9rem;
-    color: #d14343;
+    opacity: 0.7;
 }
 
 .form-success {
     margin: 0;
+
     font-size: 0.9rem;
     color: #2e8b57;
 }

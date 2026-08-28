@@ -1,0 +1,50 @@
+.task-column {
+    min-width: 220px;
+    padding: 0.8rem;
+
+    background: #100e2b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+}
+
+.task-column-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 1rem;
+}
+
+.task-column-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 0.95rem;
+}
+
+.task-column-header span {
+    padding: 0.2rem 0.45rem;
+
+    background: rgba(108, 60, 255, 0.12);
+    border-radius: 6px;
+
+    color: #aaa8c4;
+    font-size: 0.75rem;
+}
+
+.task-column-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.task-column-add {
+    margin-top: 1rem;
+
+    border: none;
+    background: none;
+
+    color: #9a73ff;
+    font: inherit;
+
+    cursor: pointer;
+}

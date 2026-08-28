@@ -1,0 +1,88 @@
+.create-task-modal {
+    width: 460px;
+    padding: 2rem;
+
+    background: #171433;
+    color: white;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
+.create-task-modal h2 {
+    margin: 0 0 1.5rem;
+}
+
+.create-task-modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.task-modal-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.task-modal-field label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.task-modal-field textarea,
+.task-modal-field select,
+.task-modal-field input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 0.85rem 1rem;
+
+    background: #0f0d28;
+    color: white;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+
+    font: inherit;
+
+    outline: none;
+}
+
+.task-modal-field textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.task-modal-field textarea:focus,
+.task-modal-field select:focus,
+.task-modal-field input:focus {
+    border-color: #6c3cff;
+}
+
+.task-modal-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.create-task-modal .form-field__input {
+    background: #0f0d28;
+    color: white;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.create-task-modal .form-field__input:focus {
+    border-color: #6c3cff;
+    outline: none;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.75rem;
+
+    margin-top: 0.5rem;
+}
