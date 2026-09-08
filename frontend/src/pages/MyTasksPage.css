@@ -1,0 +1,257 @@
+.my-tasks-page {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 45% 10%,
+            rgba(65, 45, 150, 0.12),
+            transparent 35%
+        ),
+        #090720;
+
+    color: white;
+}
+
+.my-tasks-content {
+    padding: 2.5rem 3rem;
+}
+
+.my-tasks-heading {
+    margin-bottom: 1.5rem;
+}
+
+.my-tasks-heading h1 {
+    margin: 0 0 0.4rem;
+
+    font-size: 1.8rem;
+}
+
+.my-tasks-heading p {
+    margin: 0;
+
+    color: #aaa8c4;
+}
+
+/* Summary */
+
+.my-tasks-summary {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 1rem;
+
+    margin-bottom: 1.4rem;
+}
+
+.summary-button {
+    padding: 0;
+
+    border: none;
+    border-radius: 10px;
+
+    background: transparent;
+
+    font: inherit;
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.summary-button .stat-card {
+    height: 100%;
+    box-sizing: border-box;
+
+    transition:
+        border-color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.summary-button:hover .stat-card {
+    transform: translateY(-2px);
+
+    border-color: rgba(108, 60, 255, 0.55);
+}
+
+.summary-button.active .stat-card {
+    border-color: #6c3cff;
+
+    box-shadow:
+        0 0 0 1px rgba(108, 60, 255, 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* Main panel */
+
+.my-tasks-panel {
+    padding: 1rem;
+
+    background: linear-gradient(
+        145deg,
+        rgba(22, 19, 55, 0.95),
+        rgba(13, 11, 38, 0.95)
+    );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+}
+
+/* Table */
+
+.my-tasks-table {
+    margin-top: 1rem;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 9px;
+}
+
+.my-tasks-table-header {
+    display: grid;
+
+    grid-template-columns:
+        minmax(260px, 2fr)
+        minmax(160px, 1.2fr)
+        0.8fr
+        0.7fr
+        0.9fr
+        1fr;
+
+    align-items: center;
+    gap: 1rem;
+
+    padding: 0.9rem 1.2rem;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    color: #aaa8c4;
+
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.my-tasks-empty {
+    padding: 3rem;
+
+    color: #8f8ca8;
+
+    text-align: center;
+}
+
+/* Pagination */
+
+.my-tasks-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1.25rem 0.5rem 0.25rem;
+
+    color: #aaa8c4;
+
+    font-size: 0.85rem;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+
+    gap: 0.4rem;
+}
+
+.pagination-controls button {
+    min-width: 34px;
+    height: 34px;
+
+    padding: 0 0.6rem;
+
+    background: #12102f;
+    color: #c5c2d7;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font: inherit;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+    border-color: #6c3cff;
+}
+
+.pagination-controls button.active {
+    background: #6c3cff;
+    border-color: #6c3cff;
+
+    color: white;
+}
+
+.pagination-controls button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* Responsive fallback */
+
+@media (max-width: 1200px) {
+    .my-tasks-summary {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .my-tasks-panel {
+        overflow-x: auto;
+    }
+
+    .my-tasks-table {
+        min-width: 1050px;
+    }
+}
+
+@media (max-width: 800px) {
+    .my-tasks-content {
+        padding: 2rem 1rem;
+    }
+
+    .my-tasks-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.summary-button .stat-card-icon {
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+/* All */
+.summary-all .stat-card-icon {
+    background: rgba(139, 92, 246, 0.18);
+    color: #a78bfa;
+}
+
+/* Assigned */
+.summary-assigned .stat-card-icon {
+    background: rgba(59, 130, 246, 0.18);
+    color: #60a5fa;
+}
+
+/* Created */
+.summary-created .stat-card-icon {
+    background: rgba(16, 185, 129, 0.18);
+    color: #34d399;
+}
+
+/* Reviewing */
+.summary-reviewing .stat-card-icon {
+    background: rgba(245, 158, 11, 0.18);
+    color: #fbbf24;
+}
+
+/* Completed */
+.summary-completed .stat-card-icon {
+    background: rgba(16, 185, 129, 0.18);
+    color: #2dd4a7;
+}

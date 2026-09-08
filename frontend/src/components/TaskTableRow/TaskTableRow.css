@@ -1,0 +1,172 @@
+.my-task-row {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns:
+        minmax(260px, 2fr)
+        minmax(160px, 1.2fr)
+        0.8fr
+        0.7fr
+        0.9fr
+        1fr;
+
+    align-items: center;
+    gap: 1rem;
+
+    padding: 1rem 1.2rem;
+
+    background: transparent;
+    color: white;
+
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+
+    text-align: left;
+    font: inherit;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.my-task-row:hover {
+    background: rgba(108, 60, 255, 0.06);
+}
+
+.my-task-main {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.my-task-main strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 0.95rem;
+}
+
+.my-task-main span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #8f8ca8;
+    font-size: 0.8rem;
+}
+
+.my-task-project {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    min-width: 0;
+
+    color: #d2cfea;
+}
+
+.my-task-project svg {
+    flex-shrink: 0;
+    color: #9b7aff;
+}
+
+.my-task-project span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.my-task-role,
+.my-task-priority,
+.my-task-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 0.3rem 0.55rem;
+
+    border-radius: 7px;
+
+    font-size: 0.76rem;
+    font-weight: 600;
+}
+
+/* Roles */
+
+.role-assignee {
+    background: rgba(59, 130, 246, 0.16);
+    color: #60a5fa;
+}
+
+.role-creator {
+    background: rgba(16, 185, 129, 0.16);
+    color: #34d399;
+}
+
+.role-reviewer {
+    background: rgba(245, 158, 11, 0.16);
+    color: #fbbf24;
+}
+
+/* Priorities */
+
+.priority-1 {
+    background: rgba(148, 163, 184, 0.16);
+    color: #cbd5e1;
+}
+
+.priority-2 {
+    background: rgba(14, 165, 233, 0.16);
+    color: #38bdf8;
+}
+
+.priority-3 {
+    background: rgba(245, 158, 11, 0.18);
+    color: #fbbf24;
+}
+
+.priority-4 {
+    background: rgba(249, 115, 22, 0.18);
+    color: #fb923c;
+}
+
+.priority-5 {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ff6464;
+}
+
+/* Status */
+
+.status-backlog {
+    background: rgba(148, 163, 184, 0.14);
+    color: #cbd5e1;
+}
+
+.status-ready {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+}
+
+.status-in_progress {
+    background: rgba(108, 60, 255, 0.18);
+    color: #a78bfa;
+}
+
+.status-to_review {
+    background: rgba(245, 158, 11, 0.16);
+    color: #fbbf24;
+}
+
+.status-done {
+    background: rgba(16, 185, 129, 0.16);
+    color: #34d399;
+}
+
+.my-task-date {
+    color: #bbb8ce;
+    font-size: 0.85rem;
+}

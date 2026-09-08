@@ -21,9 +21,7 @@ export function Navbar() {
                 >
                     Projects
                 </NavLink>
-
-                <button type="button">My Tasks</button>
-                <button type="button">Activity</button>
+                <NavLink to="/tasks">My Tasks</NavLink>
             </div>
 
             <div className="navbar-user">

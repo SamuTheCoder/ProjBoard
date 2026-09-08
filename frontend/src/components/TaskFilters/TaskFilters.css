@@ -1,0 +1,54 @@
+.task-filters-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    flex-wrap: wrap;
+}
+
+.task-filters-bar select {
+    min-width: 130px;
+
+    padding: 0.7rem 2.2rem 0.7rem 0.9rem;
+
+    background: #12102f;
+    color: #d5d2e6;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+
+    font: inherit;
+    font-size: 0.85rem;
+
+    cursor: pointer;
+    outline: none;
+
+    transition: border-color 0.18s ease;
+}
+
+.task-filters-bar select:hover,
+.task-filters-bar select:focus {
+    border-color: #6c3cff;
+}
+
+.task-filters-clear {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    padding: 0.7rem;
+
+    border: none;
+    background: transparent;
+
+    color: #9b7aff;
+
+    font: inherit;
+    font-size: 0.85rem;
+
+    cursor: pointer;
+}
+
+.task-filters-clear:hover {
+    color: #b49cff;
+}
