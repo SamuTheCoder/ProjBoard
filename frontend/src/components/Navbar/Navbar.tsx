@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { Brand } from "./Brand";
+import { Brand } from "../Brand/Brand";
 import "./Navbar.css";
 
 export function Navbar() {

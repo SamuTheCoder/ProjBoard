@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { Button } from "../Button";
-import { FormField } from "../FormField";
+import { Button } from "../Button/Button";
+import { FormField } from "../FormField/FormField";
 
 import { getApiErrorMessage } from "../../api/errors";
 

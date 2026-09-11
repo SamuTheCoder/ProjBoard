@@ -2,44 +2,45 @@ import { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Navbar } from "../components/Navbar";
-import { Button } from "../components/Button";
+import { Navbar } from "../../components/Navbar/Navbar";
+import { Button } from "../../components/Button/Button";
 
 import {
     ProjectSidebar,
     type ProjectSection,
-} from "../components/ProjectSidebar/ProjectSidebar";
+} from "../../components/ProjectSidebar/ProjectSidebar";
+import { ProjectCalendar } from "../../components/ProjectCalendar/ProjectCalendar";
 
-import { StatCard } from "../components/StatCard/StatCard";
-import { TaskColumn } from "../components/TaskColumn/TaskColumn";
-import { TaskCard } from "../components/TaskCard/TaskCard";
+import { StatCard } from "../../components/StatCard/StatCard";
+import { TaskColumn } from "../../components/TaskColumn/TaskColumn";
+import { TaskCard } from "../../components/TaskCard/TaskCard";
 
-import { TaskDetailsPanel } from "../components/TaskDetailsPanel/TaskDetailsPanel";
+import { TaskDetailsPanel } from "../../components/TaskDetailsPanel/TaskDetailsPanel";
 
-import { CreateTaskModal } from "../components/CreateTaskModal/CreateTaskModal";
+import { CreateTaskModal } from "../../components/CreateTaskModal/CreateTaskModal";
 
-import { createTask, getProjectTasks, updateTask } from "../api/task";
+import { createTask, getProjectTasks, updateTask } from "../../api/task";
 
-import { deleteProject, getProject } from "../api/project";
+import { deleteProject, getProject } from "../../api/project";
 
 import {
     addProjectMember,
     getProjectMembers,
     removeProjectMember,
     transferProjectOwnership,
-} from "../api/member";
+} from "../../api/member";
 
-import { getCurrentUser } from "../api/user";
+import { getCurrentUser } from "../../api/user";
 
-import { getApiErrorMessage } from "../api/errors";
+import { getApiErrorMessage } from "../../api/errors";
 
-import type { TaskCreate, TaskResponse, TaskUpdate } from "../types/task";
+import type { TaskCreate, TaskResponse, TaskUpdate } from "../../types/task";
 
-import type { ProjectResponse } from "../types/project";
+import type { ProjectResponse } from "../../types/project";
 
-import type { ProjectMemberResponse } from "../types/member";
+import type { ProjectMemberResponse } from "../../types/member";
 
-import type { UserResponse } from "../types/auth";
+import type { UserResponse } from "../../types/auth";
 
 import "./ProjectDashboard.css";
 
@@ -52,7 +53,7 @@ import {
     CircleCheckBig,
 } from "lucide-react";
 
-import { ErrorToast } from "../components/ErrorToast/ErrorToast";
+import { ErrorToast } from "../../components/ErrorToast/ErrorToast";
 
 export function ProjectDashboard() {
     const { projectId } = useParams();
@@ -644,6 +645,13 @@ export function ProjectDashboard() {
                                 })}
                             </div>
                         </section>
+                    )}
+
+                    {activeSection === "calendar" && (
+                        <ProjectCalendar
+                            tasks={tasks}
+                            onTaskClick={(task) => setSelectedTask(task)}
+                        />
                     )}
 
                     {activeSection === "members" && (

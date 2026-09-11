@@ -1,5 +1,10 @@
 .my-tasks-page {
-    min-height: 100vh;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
 
     background:
         radial-gradient(
@@ -13,15 +18,31 @@
 }
 
 .my-tasks-content {
-    padding: 2.5rem 3rem;
+    flex: 1;
+
+    min-height: 0;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 2rem 2.5rem;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
 }
 
+/* Heading */
+
 .my-tasks-heading {
-    margin-bottom: 1.5rem;
+    flex-shrink: 0;
+
+    margin-bottom: 1.3rem;
 }
 
 .my-tasks-heading h1 {
-    margin: 0 0 0.4rem;
+    margin: 0 0 0.35rem;
 
     font-size: 1.8rem;
 }
@@ -32,18 +53,22 @@
     color: #aaa8c4;
 }
 
-/* Summary */
+/* Summary cards */
 
 .my-tasks-summary {
+    flex-shrink: 0;
+
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
 
     gap: 1rem;
 
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.2rem;
 }
 
 .summary-button {
+    min-width: 0;
+
     padding: 0;
 
     border: none;
@@ -59,6 +84,7 @@
 
 .summary-button .stat-card {
     height: 100%;
+
     box-sizing: border-box;
 
     transition:
@@ -80,10 +106,19 @@
         0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
-/* Main panel */
+/* Main tasks container */
 
 .my-tasks-panel {
+    flex: 1;
+
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
     padding: 1rem;
+
+    box-sizing: border-box;
 
     background: linear-gradient(
         145deg,
@@ -93,20 +128,38 @@
 
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
+
+    overflow: hidden;
+}
+
+/* Filters shouldn't consume flexible height */
+
+.task-filters-bar {
+    flex-shrink: 0;
 }
 
 /* Table */
 
 .my-tasks-table {
+    flex: 1;
+
+    min-height: 0;
+
     margin-top: 1rem;
 
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 9px;
 }
 
 .my-tasks-table-header {
+    position: sticky;
+    top: 0;
+
+    z-index: 2;
+
     display: grid;
 
     grid-template-columns:
@@ -122,7 +175,7 @@
 
     padding: 0.9rem 1.2rem;
 
-    background: rgba(255, 255, 255, 0.025);
+    background: #151233;
 
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
@@ -143,11 +196,13 @@
 /* Pagination */
 
 .my-tasks-pagination {
+    flex-shrink: 0;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 1.25rem 0.5rem 0.25rem;
+    padding: 1rem 0.5rem 0;
 
     color: #aaa8c4;
 
@@ -191,67 +246,33 @@
 
 .pagination-controls button:disabled {
     opacity: 0.35;
+
     cursor: not-allowed;
 }
 
-/* Responsive fallback */
+/* Responsive */
 
 @media (max-width: 1200px) {
     .my-tasks-summary {
         grid-template-columns: repeat(3, 1fr);
     }
 
-    .my-tasks-panel {
+    .my-tasks-table {
         overflow-x: auto;
     }
 
-    .my-tasks-table {
+    .my-tasks-table-header,
+    .my-task-row {
         min-width: 1050px;
     }
 }
 
 @media (max-width: 800px) {
     .my-tasks-content {
-        padding: 2rem 1rem;
+        padding: 1.5rem 1rem;
     }
 
     .my-tasks-summary {
         grid-template-columns: 1fr 1fr;
     }
-}
-
-.summary-button .stat-card-icon {
-    transition:
-        background 0.2s ease,
-        color 0.2s ease;
-}
-
-/* All */
-.summary-all .stat-card-icon {
-    background: rgba(139, 92, 246, 0.18);
-    color: #a78bfa;
-}
-
-/* Assigned */
-.summary-assigned .stat-card-icon {
-    background: rgba(59, 130, 246, 0.18);
-    color: #60a5fa;
-}
-
-/* Created */
-.summary-created .stat-card-icon {
-    background: rgba(16, 185, 129, 0.18);
-    color: #34d399;
-}
-
-/* Reviewing */
-.summary-reviewing .stat-card-icon {
-    background: rgba(245, 158, 11, 0.18);
-    color: #fbbf24;
-}
-
-/* Completed */
-.summary-completed .stat-card-icon {
-    background: rgba(16, 185, 129, 0.18);
-    color: #2dd4a7;
 }

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { createProject } from "../api/project";
-import type { ProjectResponse } from "../types/project";
-import { Button } from "./Button";
-import { FormField } from "./FormField";
+import { createProject } from "../../api/project";
+import type { ProjectResponse } from "../../types/project";
+import { Button } from "../Button/Button";
+import { FormField } from "../FormField/FormField";
 import "./CreateProjectModal.css";
-import { getApiErrorMessage } from "../api/errors";
+import { getApiErrorMessage } from "../../api/errors";
 
 type CreateProjectModalProps = {
     isOpen: boolean;

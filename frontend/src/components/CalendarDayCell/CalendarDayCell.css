@@ -1,0 +1,81 @@
+.calendar-day-cell {
+    min-height: 100px;
+
+    padding: 0.65rem;
+
+    box-sizing: border-box;
+
+    background: rgba(11, 9, 35, 0.4);
+
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+
+    cursor: pointer;
+
+    transition: background 0.16s ease;
+}
+
+.calendar-day-cell:hover {
+    background: rgba(108, 60, 255, 0.05);
+}
+
+.calendar-day-cell.outside-month {
+    opacity: 0.35;
+}
+
+.calendar-day-cell.selected {
+    background: rgba(108, 60, 255, 0.08);
+}
+
+.calendar-day-number {
+    display: flex;
+    justify-content: flex-start;
+
+    margin-bottom: 0.4rem;
+}
+
+.calendar-day-number span {
+    width: 26px;
+    height: 26px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 0.8rem;
+}
+
+.calendar-day-number span.today {
+    background: #6c3cff;
+    color: white;
+
+    font-weight: 600;
+}
+
+.calendar-day-tasks {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.3rem;
+
+    overflow: hidden;
+}
+
+.calendar-more-tasks {
+    padding-left: 0.2rem;
+
+    overflow: hidden;
+
+    color: #8f8ca8;
+
+    font-size: 0.7rem;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

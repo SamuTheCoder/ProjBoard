@@ -1,0 +1,59 @@
+.calendar-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1rem;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.calendar-toolbar-navigation {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.calendar-toolbar-navigation h3 {
+    margin: 0 0 0 0.6rem;
+
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.calendar-today-button,
+.calendar-nav-button {
+    height: 38px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 7px;
+
+    background: #12102f;
+    color: white;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease;
+}
+
+.calendar-today-button {
+    padding: 0 1rem;
+
+    font: inherit;
+}
+
+.calendar-nav-button {
+    width: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-today-button:hover,
+.calendar-nav-button:hover {
+    border-color: #6c3cff;
+    background: #18143c;
+}

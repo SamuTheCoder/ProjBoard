@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import { AuthPage } from "./pages/AuthPage";
-import { ProjectsPage } from "./pages/ProjectsPage";
-import { ProjectDashboard } from "./pages/ProjectDashboard";
-import { MyTasksPage } from "./pages/MyTasksPage";
+import { AuthPage } from "./pages/AuthPage/AuthPage";
+import { ProjectsPage } from "./pages/ProjectsPage/ProjectsPage";
+import { ProjectDashboard } from "./pages/ProjectDashboard/ProjectDashboard";
+import { MyTasksPage } from "./pages/MyTasksPage/MyTasksPage";
 
 function App() {
     return (

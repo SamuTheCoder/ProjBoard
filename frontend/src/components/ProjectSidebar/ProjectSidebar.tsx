@@ -1,8 +1,21 @@
+import {
+    CalendarDays,
+    LayoutDashboard,
+    ListTodo,
+    Settings,
+    Users,
+} from "lucide-react";
+
 import { useNavigate } from "react-router-dom";
 
 import "./ProjectSidebar.css";
 
-export type ProjectSection = "dashboard" | "tasks" | "members" | "settings";
+export type ProjectSection =
+    | "dashboard"
+    | "tasks"
+    | "calendar"
+    | "members"
+    | "settings";
 
 type ProjectSidebarProps = {
     activeSection: ProjectSection;
@@ -16,25 +29,31 @@ export function ProjectSidebar({
 }: ProjectSidebarProps) {
     const navigate = useNavigate();
 
-    const sections: {
-        key: ProjectSection;
-        label: string;
-    }[] = [
+    const sections = [
         {
-            key: "dashboard",
+            key: "dashboard" as const,
             label: "Dashboard",
+            icon: LayoutDashboard,
         },
         {
-            key: "tasks",
+            key: "tasks" as const,
             label: "Tasks",
+            icon: ListTodo,
         },
         {
-            key: "members",
+            key: "calendar" as const,
+            label: "Calendar",
+            icon: CalendarDays,
+        },
+        {
+            key: "members" as const,
             label: "Members",
+            icon: Users,
         },
         {
-            key: "settings",
+            key: "settings" as const,
             label: "Settings",
+            icon: Settings,
         },
     ];
 
@@ -48,17 +67,19 @@ export function ProjectSidebar({
             </button>
 
             <nav className="project-sidebar-nav">
-                {sections.map((section) => (
+                {sections.map(({ key, label, icon: Icon }) => (
                     <button
-                        key={section.key}
+                        key={key}
                         className={
-                            activeSection === section.key
+                            activeSection === key
                                 ? "sidebar-item active"
                                 : "sidebar-item"
                         }
-                        onClick={() => onSectionChange(section.key)}
+                        onClick={() => onSectionChange(key)}
                     >
-                        {section.label}
+                        <Icon size={18} />
+
+                        {label}
                     </button>
                 ))}
             </nav>

@@ -8,30 +8,30 @@ import {
     UserRound,
 } from "lucide-react";
 
-import { Navbar } from "../components/Navbar";
-import { StatCard } from "../components/StatCard/StatCard";
-import { TaskFilters } from "../components/TaskFilters/TaskFilters";
-import type { TaskFilterState } from "../components/TaskFilters/TaskFilters";
+import { Navbar } from "../../components/Navbar/Navbar";
+import { StatCard } from "../../components/StatCard/StatCard";
+import { TaskFilters } from "../../components/TaskFilters/TaskFilters";
+import type { TaskFilterState } from "../../components/TaskFilters/TaskFilters";
 
 import {
     TaskTableRow,
     type TaskRole,
-} from "../components/TaskTableRow/TaskTableRow";
+} from "../../components/TaskTableRow/TaskTableRow";
 
-import { TaskDetailsPanel } from "../components/TaskDetailsPanel/TaskDetailsPanel";
-import { ErrorToast } from "../components/ErrorToast/ErrorToast";
+import { TaskDetailsPanel } from "../../components/TaskDetailsPanel/TaskDetailsPanel";
+import { ErrorToast } from "../../components/ErrorToast/ErrorToast";
 
-import { getCurrentUser } from "../api/user";
-import { getProjects } from "../api/project";
-import { getProjectTasks, updateTask } from "../api/task";
-import { getProjectMembers } from "../api/member";
-import { getApiErrorMessage } from "../api/errors";
+import { getCurrentUser } from "../../api/user";
+import { getProjects } from "../../api/project";
+import { getProjectTasks, updateTask } from "../../api/task";
+import { getProjectMembers } from "../../api/member";
+import { getApiErrorMessage } from "../../api/errors";
 
-import type { TaskResponse, TaskUpdate } from "../types/task";
+import type { TaskResponse, TaskUpdate } from "../../types/task";
 
-import type { ProjectMemberResponse } from "../types/member";
-import type { UserResponse } from "../types/auth";
-import type { ProjectResponse } from "../types/project";
+import type { ProjectMemberResponse } from "../../types/member";
+import type { UserResponse } from "../../types/auth";
+import type { ProjectResponse } from "../../types/project";
 
 import "./MyTasksPage.css";
 

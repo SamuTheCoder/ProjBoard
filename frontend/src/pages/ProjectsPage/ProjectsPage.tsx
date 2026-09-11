@@ -1,15 +1,15 @@
-import { Navbar } from "../components/Navbar";
-import { ProjectCard } from "../components/ProjectCard";
-import { Button } from "../components/Button";
+import { Navbar } from "../../components/Navbar/Navbar";
+import { ProjectCard } from "../../components/ProjectCard/ProjectCard";
+import { Button } from "../../components/Button/Button";
 import { useEffect, useState } from "react";
-import { getCurrentUser } from "../api/user";
+import { getCurrentUser } from "../../api/user";
 import "./ProjectsPage.css";
-import type { UserResponse } from "../types/auth";
-import { getProjects } from "../api/project";
-import type { ProjectResponse } from "../types/project";
-import { CreateProjectModal } from "../components/CreateProjectModal";
+import type { UserResponse } from "../../types/auth";
+import { getProjects } from "../../api/project";
+import type { ProjectResponse } from "../../types/project";
+import { CreateProjectModal } from "../../components/CreateProjectModal/CreateProjectModal";
 import { useNavigate } from "react-router-dom";
-import { ErrorToast } from "../components/ErrorToast/ErrorToast";
+import { ErrorToast } from "../../components/ErrorToast/ErrorToast";
 
 export function ProjectsPage() {
     const [projects, setProjects] = useState<ProjectResponse[]>([]);

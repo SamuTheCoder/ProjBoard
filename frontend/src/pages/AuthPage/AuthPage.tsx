@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Brand } from "../components/Brand";
-import { FormField } from "../components/FormField";
-import { Button } from "../components/Button";
-import { login, register } from "../api/auth";
-import { getApiErrorMessage } from "../api/errors";
+import { Brand } from "../../components/Brand/Brand";
+import { FormField } from "../../components/FormField/FormField";
+import { Button } from "../../components/Button/Button";
+import { login, register } from "../../api/auth";
+import { getApiErrorMessage } from "../../api/errors";
 import { useNavigate } from "react-router-dom";
 import "./AuthPage.css";
-import { ErrorToast } from "../components/ErrorToast/ErrorToast";
+import { ErrorToast } from "../../components/ErrorToast/ErrorToast";
 
 type AuthMode = "login" | "register";
 
